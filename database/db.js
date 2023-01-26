@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const DB='mongodb://localhost:27017/nimbus-backend';
+const DB='mongodb://0.0.0.0:27017/nimbus-backend';
 
 const Connection = async () => {
     
