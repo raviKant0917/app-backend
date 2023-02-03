@@ -17,26 +17,46 @@ export const getUsers = async(req,res)=>{
     }
 }
 
-export const getUserById = async(req,res)=>{
-    const id = req.params.id;
+export const getUsersByName = async(req,res)=>{
     try {
-        const result = await User.findById(id);
-        if(!result){
-            return res.status(401).json({
-                message: "User does not exist exists"
-            })
-        }
+        const key = req.params.name;
+        // const regex = new RegExp(key,g);
+        console.log(key);
+        const result = await User.find({
+            $or: [{'userName': key},{'phoneNumber': key}]
+        });
         console.log(result);
-        res.status(200).json({
-            success: "true",
+        res.status(201).json({
+            message: "found",
             body: result
-        })
+        })       
     } catch (e) {
         res.status(500).json({
             message: "Something went wrong!"
         })
     }
 }
+
+// export const getUserById = async(req,res)=>{
+//     const id = req.params.id;
+//     try {
+//         const result = await User.findById(id);
+//         if(!result){
+//             return res.status(401).json({
+//                 message: "User does not exist exists"
+//             })
+//         }
+//         console.log(result);
+//         res.status(200).json({
+//             success: "true",
+//             body: result
+//         })
+//     } catch (e) {
+//         res.status(500).json({
+//             message: "Something went wrong!"
+//         })
+//     }
+// }
 
 export const postUsers = async(req,res)=>{
     console.log(req.body);

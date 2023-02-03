@@ -8,7 +8,14 @@ export const jwtAuth = async(req,res,next)=>{
         })
     }else{
         token = token.split(" ")[1];
-        const user = await jwt.verify(token,process.env.SECRET_KEY);
-        res.status()
+        try {
+            const user = await jwt.verify(token,process.env.SECRET_KEY);
+            console.log("token verified");
+            next();    
+        } catch (e) {
+            res.status(401).json({
+                message: "Unauthorized access"
+            })
+        }
     }
 }
